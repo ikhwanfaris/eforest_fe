@@ -1,0 +1,150 @@
+<div>
+  <div class="package_title">
+    <b>{{ "BUDDY_BONUS" | translate }}</b>
+  </div>
+  <br /><br />
+  <div class="filter_section">
+    <div style="margin-right: 12px; min-width: 115px">
+      <b>{{ "FILTER_BY_DATE" | translate }} </b>
+    </div>
+    <div class="date_filter_container">
+      <div
+        class="date_filter"
+        [ngClass]="range_selected == 1 ? 'active_filter' : ''"
+        (click)="rangeChange(1)"
+      >
+        {{ "TODAY" | translate }}
+      </div>
+      <div
+        class="date_filter"
+        [ngClass]="range_selected == 2 ? 'active_filter' : ''"
+        (click)="rangeChange(2)"
+      >
+        {{ "YESTERDAY" | translate }}
+      </div>
+      <div
+        class="date_filter"
+        [ngClass]="range_selected == 7 ? 'active_filter' : ''"
+        (click)="rangeChange(7)"
+      >
+        {{ "LAST_7_DAYS" | translate }}
+      </div>
+      <div
+        class="date_filter"
+        [ngClass]="range_selected == 30 ? 'active_filter' : ''"
+        (click)="rangeChange(30)"
+      >
+        {{ "LAST_30_DAYS" | translate }}
+      </div>
+      <div
+        class="date_filter"
+        [ngClass]="range_selected == 60 ? 'active_filter' : ''"
+        (click)="rangeChange(60)"
+      >
+        {{ "LAST_60_DAYS" | translate }}
+      </div>
+      <div
+        class="date_filter"
+        [ngClass]="range_selected == 90 ? 'active_filter' : ''"
+        (click)="rangeChange(90)"
+      >
+        {{ "LAST_90_DAYS" | translate }}
+      </div>
+    </div>
+  </div>
+  <br /><br />
+
+  <div *ngIf="is_loading == false">
+    <div *ngIf="this.bonusList.data.items.length > 0" class="table_wrapper">
+      <table
+        id="directTable"
+        style="width: 100%; border-collapse: separate; border-spacing: 0 6px"
+      >
+        <tr>
+          <th (click)="sortTable(0)">
+            {{ "DATE" | translate }}
+            <ion-icon
+              [id]="'arrows_direct_' + 0"
+              [name]="'caret-up-outline'"
+              [hidden]="true"
+            ></ion-icon>
+          </th>
+          <!-- <th>Buddy Username</th> -->
+          <th (click)="sortTable(1)">
+            {{ "BUDDY_PERCENTAGE" | translate }}
+            <ion-icon
+              [id]="'arrows_direct_' + 1"
+              [name]="'caret-up-outline'"
+              [hidden]="true"
+            ></ion-icon>
+          </th>
+          <th (click)="sortTable(2)">
+            {{ "BONUS_AMOUNT" | translate }}
+            <ion-icon
+              [id]="'arrows_direct_' + 2"
+              [name]="'caret-up-outline'"
+              [hidden]="true"
+            ></ion-icon>
+          </th>
+          <th (click)="sortTable(3)">
+            {{ "PURCHASED_PACKAGE" | translate }}
+            <ion-icon
+              [id]="'arrows_direct_' + 3"
+              [name]="'caret-up-outline'"
+              [hidden]="true"
+            ></ion-icon>
+          </th>
+        </tr>
+        <tr *ngFor="let bonus of this.bonusList.data.items" class="table_row">
+          <td>
+            <!-- {{ bonus?.datetime }} -->
+            {{ bonus?.datetime.substring(0, 10) }}
+          </td>
+          <!-- <td>
+          {{ bonus?.username }}
+        </td> -->
+          <td>{{ bonus?.bonus_pct }}%</td>
+          <!-- <td>{{ bonus?.bonus_amount }}</td> -->
+          <td>{{ bonus?.bonus_amount | currency: " ":"symbol":"0.0-0" }}</td>
+          <td [style.color]="getPackageColor(bonus?.package_name)">
+            {{ bonus?.package_name }}
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div *ngIf="this.bonusList.data.items.length == 0" class="table_wrapper">
+      <div style="text-align: center" class="table_row">
+        {{ "NO_DATA" | translate }}
+      </div>
+    </div>
+    <br />
+    <div
+      *ngIf="this.bonusList.data.items.length > 0"
+      class="pagination_container"
+    >
+      <div class="total_page">
+        {{ "SHOWING" | translate }} <b>{{ this.entry }}</b> of
+        <b>{{ totalEntry }}</b>
+      </div>
+      <div class="pagination">
+        <div class="pagination_cursor">
+          <ion-icon (click)="lessPage()" name="chevron-back-outline"></ion-icon>
+        </div>
+        <div
+          [ngClass]="this.page == a ? 'active_pagination' : ''"
+          *ngFor="let a of this.displayPages"
+        >
+          {{ a }}
+        </div>
+        <div class="pagination_cursor">
+          <ion-icon
+            (click)="addPage()"
+            name="chevron-forward-outline"
+          ></ion-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="is_loading == true"></div>
+</div>

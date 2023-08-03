@@ -1,0 +1,201 @@
+<div *ngIf="showData == true" class="basic_info">
+  {{ "DIRECT_BUDDIES" | translate }}
+</div>
+<div *ngIf="showData == true">
+  <ion-row>
+    <ion-col sizeXs="12" sizeSm="6">
+      <ion-row class="table_container2">
+        <ion-col sizeMd="6" sizeXs="12">
+          <div>{{ "MY_BUDDIES" | translate }}</div>
+          <div *ngIf="mobile == true">
+            <br />
+          </div>
+
+          <b class="highlight_num">{{ teamDetails?.total_direct }}</b>
+        </ion-col>
+        <ion-col sizeMd="6" sizeXs="12">
+          <div>{{ "TEAM_BUDDIES" | translate }}</div>
+          <div *ngIf="mobile == true">
+            <br />
+          </div>
+          <b class="highlight_num">{{ teamDetails?.total_team_members }}</b>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col sizeXs="12" sizeSm="6">
+      <ion-row class="table_container2">
+        <ion-col sizeMd="6" sizeXs="12">
+          <div>{{ "TOTAL_BUDDY_VOLUME" | translate }}</div>
+          <div *ngIf="mobile == true">
+            <br />
+          </div>
+          <b class="highlight_num"
+            >{{
+              teamDetails?.total_buddy_volume | currency: "$":"symbol":"0.0-0"
+            }}
+          </b>
+        </ion-col>
+        <ion-col sizeMd="6" sizeXs="12">
+          <div>{{ "TOTAL_TEAM_VOLUME" | translate }}</div>
+          <div *ngIf="mobile == true">
+            <br />
+          </div>
+          <b class="highlight_num"
+            >{{
+              teamDetails?.total_team_volume_accm
+                | currency: "$":"symbol":"0.0-0"
+            }}
+          </b>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</div>
+
+<div class="table_wrapper" *ngIf="showData == true">
+  <table
+    mat-table
+    [dataSource]="this.downlineOne.data.level_1"
+    id="myteamTable"
+  >
+    <ng-container matColumnDef="no">
+      <th mat-header-cell *matHeaderCellDef (click)="sortTable(0)">
+        <b
+          >{{ "NO" | translate }}
+          <ion-icon
+            [id]="'arrows_myteam_' + 0"
+            [name]="'caret-up-outline'"
+          ></ion-icon
+        ></b>
+      </th>
+      <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="fullname">
+      <th mat-header-cell *matHeaderCellDef (click)="sortTable(1)">
+        <b
+          >{{ "NAME" | translate }}
+          <ion-icon
+            [id]="'arrows_myteam_' + 1"
+            [name]="'caret-up-outline'"
+            [hidden]="true"
+          ></ion-icon
+        ></b>
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.fullname }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef (click)="sortTable(2)">
+        <b
+          >{{ "USERNAME" | translate }}
+          <ion-icon
+            [id]="'arrows_myteam_' + 2"
+            [name]="'caret-up-outline'"
+            [hidden]="true"
+          ></ion-icon
+        ></b>
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef (click)="sortTable(3)">
+        <b
+          >{{ "EMAIL" | translate }}
+          <ion-icon
+            [id]="'arrows_myteam_' + 3"
+            [name]="'caret-up-outline'"
+            [hidden]="true"
+          ></ion-icon
+        ></b>
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef (click)="sortTable(4)">
+        <b
+          >{{ "COUNTRY" | translate }}
+          <ion-icon
+            [id]="'arrows_myteam_' + 4"
+            [name]="'caret-up-outline'"
+            [hidden]="true"
+          ></ion-icon
+        ></b>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <div *ngIf="element.country == null">-</div>
+        <div *ngIf="element.country != null">{{ element.country }}</div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef (click)="sortTable(5)">
+        <b
+          >{{ "PURCHASED_PACKAGE" | translate }}
+          <ion-icon
+            [id]="'arrows_myteam_' + 5"
+            [name]="'caret-up-outline'"
+            [hidden]="true"
+          ></ion-icon
+        ></b>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.total_purchase_order | currency: " ":"symbol":"0.0-0" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="love_tree_count">
+      <th mat-header-cell *matHeaderCellDef (click)="sortTable(6)">
+        <b
+          >{{ "LOVE_TREE" | translate }}
+          <ion-icon
+            [id]="'arrows_myteam_' + 6"
+            [name]="'caret-up-outline'"
+            [hidden]="true"
+          ></ion-icon
+        ></b>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{
+          element.love_tree_count != null
+            ? numberWithCommas(element.love_tree_count)
+            : "-"
+        }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="earth_tree_count">
+      <th mat-header-cell *matHeaderCellDef (click)="sortTable(7)">
+        <b
+          >{{ "EARTH_TREE" | translate }}
+          <ion-icon
+            [id]="'arrows_myteam_' + 7"
+            [name]="'caret-up-outline'"
+            [hidden]="true"
+          ></ion-icon
+        ></b>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{
+          element.earth_tree_count != null
+            ? numberWithCommas(element.earth_tree_count)
+            : "-"
+        }}
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <br />
+</div>
+<div *ngIf="showData == false" class="table_container">
+  <div class="basic_info">{{ "INTRODUCED_MEMBERS" | translate }}</div>
+  <h2
+    class="ion-text-center"
+    style="font-family: 'Source Sans Pro', sans-serif"
+  >
+    {{ "NO_MEMBER_INTRODUCED_YET" | translate }}
+  </h2>
+</div>

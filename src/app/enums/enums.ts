@@ -1,0 +1,25 @@
+export enum ScoreboardItems {
+  TOP_SALES,
+  TOP_RECRUITERS,
+  TOP_10K_RECRUITERS,
+  TOP_RISING_RANGERS,
+}
+
+export enum SideMenuItems {
+  DASHBOARD,
+  PURCHASE,
+  MY_PACKAGE,
+  MY_EFOREST,
+  MY_TEAM,
+  PROFILE,
+  MY_DIRECT_BONUS,
+  MY_TEAM_BONUS,
+  SEED_WALLET,
+  USDT_WALLET,
+  BALI_DESC,
+  BUY,
+  SELL,
+  ORDER_HISTORY,
+  CRYTOCARD,
+  
+}
